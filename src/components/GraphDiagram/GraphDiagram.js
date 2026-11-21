@@ -4,7 +4,7 @@ import Svg, { Path, Circle, Line } from 'react-native-svg';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-// Ultra-smooth Catmull-Rom cubic Bezier spline
+
 function getSmoothCurvePath(points) {
   if (!points || points.length === 0) return '';
   if (points.length === 1) return `M ${points[0].x} ${points[0].y}`;
@@ -42,7 +42,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
   const paddingTop = 26;
   const paddingBottom = 28;
 
-  // One-time smooth entrance animation
+
   const sweepWidth = useRef(new Animated.Value(0)).current;
   const pointAnims = useRef(Array.from({ length: 12 }, () => new Animated.Value(0))).current;
 
@@ -52,11 +52,11 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
   useEffect(() => {
     if (!hasData) return;
 
-    // Reset values for clean entry
+
     sweepWidth.setValue(0);
     pointAnims.forEach((anim) => anim.setValue(0));
 
-    // 1. Smooth, one-time left-to-right curve sweep
+
     Animated.timing(sweepWidth, {
       toValue: chartWidth,
       duration: 900,
@@ -64,7 +64,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
       useNativeDriver: false,
     }).start();
 
-    // 2. Subtle spring pop for the temperature values and timestamps
+
     const pops = pointAnims.map((anim) =>
       Animated.spring(anim, {
         toValue: 1,
@@ -80,7 +80,6 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
     return null;
   }
 
-  // 12-hour data
   const temps = hourly.temperature_2m.slice(0, 12);
   const times = hourly.time ? hourly.time.slice(0, 12) : [];
 
@@ -105,10 +104,10 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
   return (
     <View style={styles.container}>
       <View style={styles.chartWrapper}>
-        {/* Animated one-time reveal from left to right */}
+
         <Animated.View style={{ width: sweepWidth, overflow: 'hidden', height: chartHeight }}>
           <Svg width={chartWidth} height={chartHeight}>
-            {/* Subtle dotted baseline along the bottom */}
+            
             <Line
               x1={nowPoint.x}
               y1={baselineY}
@@ -120,7 +119,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
               opacity={0.25}
             />
 
-            {/* Minimal flowing wave line */}
+        {/* line */}
             <Path
               d={curvePath}
               stroke={lineColor}
@@ -130,7 +129,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
               fill="none"
             />
 
-            {/* Vertical stem connecting NOW ⊙ pin to baseline */}
+            
             <Line
               x1={nowPoint.x}
               y1={nowPoint.y + 6.5}
@@ -140,7 +139,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
               strokeWidth={1.6}
             />
 
-            {/* ⊙ Static, crisp NOW Pin (Outer ring + inner dot) */}
+           
             <Circle
               cx={nowPoint.x}
               cy={nowPoint.y}
@@ -158,7 +157,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
           </Svg>
         </Animated.View>
 
-        {/* NOW Temperature above pin */}
+       
         <Animated.View
           pointerEvents="none"
           style={[
@@ -183,7 +182,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
           </Text>
         </Animated.View>
 
-        {/* NOW Timestamp ("Now") at bottom */}
+        
         <Animated.View
           pointerEvents="none"
           style={[
@@ -200,7 +199,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
           </Text>
         </Animated.View>
 
-        {/* Future points: temperature above, small dot on curve, and timestamp at bottom */}
+        
         {points.slice(1).map((pt, i) => {
           const pointIndex = i + 1;
           const anim = pointAnims[pointIndex] || pointAnims[pointAnims.length - 1];
@@ -209,7 +208,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
             outputRange: [0, 1.2, 1],
           });
 
-          // Show timestamps spaced out every 2 hours and on the final hour so they never collide
+          
           const shouldShowTime = pointIndex % 2 === 0 || pointIndex === points.length - 1;
           const date = pt.time ? new Date(pt.time) : null;
           const timeLabel = date
@@ -218,7 +217,7 @@ export default function GraphDiagram({ weatherData, textColor, isDark }) {
 
           return (
             <React.Fragment key={`future-pt-${i}`}>
-              {/* Temperature & dot on curve */}
+              
               <Animated.View
                 pointerEvents="none"
                 style={[
