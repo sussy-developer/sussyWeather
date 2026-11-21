@@ -18,6 +18,12 @@ const styles = StyleSheet.create({
         display : 'flex',
         flexDirection : 'row',
         gap : 40 ,
+        position: 'relative',
+        top :-40,
+    //         borderWidth: 2,           // Thickness
+    // borderColor: 'red',      // Color
+    // borderRadius: 8,          // Rounded corners
+    // borderStyle: 'solid',
     }
 
 })

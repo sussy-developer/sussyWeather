@@ -38,9 +38,9 @@ img : {
         borderWidth: 2,           // Thickness
         borderColor: '#a8a6a685',      // Color
         borderRadius: 800,
-        height: 80,          // Rounded corners
+        height: 70,          // Rounded corners
         borderStyle: 'solid',
-        width: 80,
+        width: 70,
         // padding :10,
         gap: 50,
         // marginHorizontal : 90,

@@ -15,6 +15,8 @@ import Info from './src/components/info/Info';
 import Moon from './src/components/vectors/Moon';
 import AnimatedStars from './src/components/vectors/AnimatedStars';
 import Place from './src/components/place/Place';
+import GraphDiagram from './src/components/GraphDiagram/GraphDiagram';
+import HighLow from './src/components/tempe/HighLow';
 
 
 function getWeatherBgColor(code, isDay) {
@@ -52,14 +54,12 @@ function getWeatherBgColor(code, isDay) {
   return 'rgb(255, 240, 197)';
 }
 
-
 export default function App() {
   const [isNight, setIsNight] = useState(true);
   const [location, setLocation] = useState(null); //location
   const [weatherData, setWeatherData] = useState(null);
   const [placeData, setPlaceData] = useState(null);
   const [aqi, setAqi] = useState(null);
-
 
   useEffect(() => {
     async function requestlocation() {
@@ -81,13 +81,11 @@ export default function App() {
     requestlocation();
   }, []);
 
-
-
   useEffect(() => {
     if (!location) return;
 
     async function fetchWeather() {
-      const URL = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,is_day&forecast_hours=12&timezone=auto`;
+      const URL = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min&forecast_hours=12&timezone=auto`;
 
       try {
         const res = await fetch(URL);
@@ -130,7 +128,7 @@ export default function App() {
       const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.latitude}&longitude=${location.longitude}&current=us_aqi`;
       try {
         const res = await fetch(url);
-        console.log('status: ',res.status, 'ok : ', res.ok);
+        console.log('status: ', res.status, 'ok : ', res.ok);
         const data = await res.json();
         console.log(data);
         setAqi(data);
@@ -141,10 +139,6 @@ export default function App() {
 
     fetchAqi()
   }, [location]);
-
-
-
-
 
 
   const weatherCode = weatherData?.current?.weather_code;
@@ -164,18 +158,14 @@ export default function App() {
   const needrain = rainCodes.includes(weatherCode);
 
 
-
-
-
-
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
       {isClearNight && <AnimatedStars />}
       <TempSection weatherData={weatherData} textColor={textColor} isDark={isDark} />
-
+      <HighLow weatherData={weatherData} textColor={textColor} isDark={isDark} />
       <View style={styles.ani}>
 
-        {/* sun */}
+  
         {needsun && (
           <View>
             {
@@ -190,7 +180,7 @@ export default function App() {
         )}
 
 
-        {/* clouddy */}
+        
         {needCloud && (
           <View style={styles.clds}>
             {isDay === 1 ? (
@@ -203,17 +193,19 @@ export default function App() {
         )}
 
 
-        {/* raining */}
         {needrain && (
           <RainCloud />
         )}
       </View>
 
-      <Info weatherData={weatherData} aqi = {aqi} textColor={textColor} isDark={isDark} />
+      <Info weatherData={weatherData} aqi={aqi} textColor={textColor} isDark={isDark} />
+      <GraphDiagram weatherData={weatherData} textColor={textColor} isDark={isDark} />
 
       <Hour weatherData={weatherData} textColor={textColor} isDark={isDark} />
 
-      <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} />
+      {/* <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} /> */}
+
+      
       <StatusBar style={isDark ? "light" : "dark"} />
     </View>
   );
