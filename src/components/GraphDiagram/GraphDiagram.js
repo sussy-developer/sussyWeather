@@ -270,7 +270,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'transparent',
     position : 'relative',
-    top : -25
+    top : -45
   },
   chartWrapper: {
     width: '100%',

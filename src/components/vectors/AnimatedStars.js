@@ -3,17 +3,17 @@ import { StyleSheet, View, Animated, Easing } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 const STARS = [
-  // Delicate, spaced out stars across the night sky (10 stars)
-  { x: 12, y: 7, size: 12, type: 'sparkle', color: '#ffffff', group: 0 },
-  { x: 84, y: 9, size: 10, type: 'sparkle', color: '#fef08a', group: 1 },
-  { x: 90, y: 22, size: 7, type: 'dot', color: '#e0f2fe', group: 2 },
-  { x: 8, y: 36, size: 13, type: 'sparkle', color: '#ffffff', group: 3 },
-  { x: 88, y: 50, size: 11, type: 'sparkle', color: '#ffffff', group: 0 },
-  { x: 14, y: 62, size: 7, type: 'dot', color: '#fef08a', group: 1 },
-  { x: 82, y: 68, size: 10, type: 'sparkle', color: '#e0f2fe', group: 2 },
-  { x: 18, y: 82, size: 12, type: 'sparkle', color: '#ffffff', group: 3 },
-  { x: 84, y: 86, size: 7, type: 'dot', color: '#fef08a', group: 0 },
-  { x: 48, y: 92, size: 10, type: 'sparkle', color: '#ffffff', group: 1 },
+  // Delicate, fine pinpoint stars across the night sky (10 stars)
+  { x: 12, y: 7, size: 8, type: 'sparkle', color: '#ffffff', group: 0 },
+  { x: 84, y: 9, size: 7, type: 'sparkle', color: '#fef08a', group: 1 },
+  { x: 90, y: 22, size: 5, type: 'dot', color: '#e0f2fe', group: 2 },
+  { x: 8, y: 36, size: 9, type: 'sparkle', color: '#ffffff', group: 3 },
+  { x: 88, y: 50, size: 7.5, type: 'sparkle', color: '#ffffff', group: 0 },
+  { x: 14, y: 62, size: 4.5, type: 'dot', color: '#fef08a', group: 1 },
+  { x: 82, y: 68, size: 7, type: 'sparkle', color: '#e0f2fe', group: 2 },
+  { x: 18, y: 82, size: 8, type: 'sparkle', color: '#ffffff', group: 3 },
+  { x: 84, y: 86, size: 4.5, type: 'dot', color: '#fef08a', group: 0 },
+  { x: 48, y: 92, size: 7, type: 'sparkle', color: '#ffffff', group: 1 },
 ];
 
 export default function AnimatedStars() {
@@ -61,20 +61,20 @@ export default function AnimatedStars() {
 
   const groupStyles = [
     {
-      opacity: anim0.interpolate({ inputRange: [0, 1], outputRange: [0.2, 1] }),
-      transform: [{ scale: anim0.interpolate({ inputRange: [0, 1], outputRange: [0.75, 1.15] }) }],
+      opacity: anim0.interpolate({ inputRange: [0, 1], outputRange: [0.2, 0.95] }),
+      transform: [{ scale: anim0.interpolate({ inputRange: [0, 1], outputRange: [0.65, 1.0] }) }],
     },
     {
-      opacity: anim1.interpolate({ inputRange: [0, 1], outputRange: [0.15, 0.9] }),
-      transform: [{ scale: anim1.interpolate({ inputRange: [0, 1], outputRange: [0.8, 1.2] }) }],
+      opacity: anim1.interpolate({ inputRange: [0, 1], outputRange: [0.15, 0.85] }),
+      transform: [{ scale: anim1.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1.05] }) }],
     },
     {
-      opacity: anim2.interpolate({ inputRange: [0, 1], outputRange: [0.3, 1] }),
-      transform: [{ scale: anim2.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1.1] }) }],
+      opacity: anim2.interpolate({ inputRange: [0, 1], outputRange: [0.25, 0.9] }),
+      transform: [{ scale: anim2.interpolate({ inputRange: [0, 1], outputRange: [0.6, 0.95] }) }],
     },
     {
-      opacity: anim3.interpolate({ inputRange: [0, 1], outputRange: [0.2, 0.85] }),
-      transform: [{ scale: anim3.interpolate({ inputRange: [0, 1], outputRange: [0.85, 1.25] }) }],
+      opacity: anim3.interpolate({ inputRange: [0, 1], outputRange: [0.2, 0.8] }),
+      transform: [{ scale: anim3.interpolate({ inputRange: [0, 1], outputRange: [0.7, 1.0] }) }],
     },
   ];
 

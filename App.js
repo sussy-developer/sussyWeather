@@ -1,8 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View, Image } from 'react-native';
+import { Alert, StyleSheet, Text, View, Image, Platform } from 'react-native';
 import * as Location from 'expo-location';
 import { fetchWeatherApi } from "openmeteo";
+import * as NavigationBar from 'expo-navigation-bar';
 
 import TempSection from './src/components/tempe/TempSection'
 import Hour from './src/components/houarly/Hour';
@@ -42,7 +43,7 @@ function getWeatherBgColor(code, isDay) {
     return '#ffffff';
   }
   if ([1, 2, 3].includes(code)) {
-    return 'rgb(168, 156, 123)';
+    return '#a89c7b';
   }
   if ([45, 48].includes(code)) {
     return '#9e9e9e';
@@ -51,7 +52,7 @@ function getWeatherBgColor(code, isDay) {
     return '#374151';
   }
 
-  return 'rgb(255, 240, 197)';
+  return '#fff0c5';
 }
 
 export default function App() {
@@ -92,8 +93,8 @@ export default function App() {
         // console.log('Status:', res.status, 'OK:', res.ok);
         const data = await res.json();
         // console.log('body : ', data);
-        // data.current.is_day = 0;
-        // data.current.weather_code = 3;
+        // data.current.is_day = 1;
+        // data.current.weather_code = 81;
         // console.log(data.hourly.temperature_2m)
         // console.log(data.hourly.time)
 
@@ -149,7 +150,6 @@ export default function App() {
   const textColor = isDark ? '#ffffffa4' : '#2e2e2eca';
 
   const needsun = [0].includes(weatherCode);
-  const isClearNight = isDay === 0 && needsun;
 
   const cloudCodes = [1, 2, 3];
   const needCloud = cloudCodes.includes(weatherCode);
@@ -157,10 +157,20 @@ export default function App() {
   const rainCodes = [51, 53, 55, 61, 63, 65, 80, 81, 82];
   const needrain = rainCodes.includes(weatherCode);
 
+  const showStars = isDay === 0 && (needsun || needCloud);
+
+  useEffect(() => {
+    if (Platform.OS === 'android' && bgColor) {
+      NavigationBar.setBackgroundColorAsync(bgColor);
+      NavigationBar.setButtonStyleAsync(isDark ? 'light' : 'dark');
+    }
+  }, [bgColor, isDark]);
+
 
   return (
     <View style={[styles.container, { backgroundColor: bgColor }]}>
-      {isClearNight && <AnimatedStars />}
+      {showStars && <AnimatedStars />}
+      
       <TempSection weatherData={weatherData} textColor={textColor} isDark={isDark} />
       <HighLow weatherData={weatherData} textColor={textColor} isDark={isDark} />
       <View style={styles.ani}>
@@ -203,10 +213,10 @@ export default function App() {
 
       <Hour weatherData={weatherData} textColor={textColor} isDark={isDark} />
 
-      {/* <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} /> */}
-
       
-      <StatusBar style={isDark ? "light" : "dark"} />
+
+      <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} />
+      <StatusBar style={isDark ? "light" : "dark"} backgroundColor={bgColor} translucent={true} />
     </View>
   );
 }
@@ -229,7 +239,7 @@ const styles = StyleSheet.create({
     gap: 20,
     flex: 1,
     padding: 10,
-    paddingTop: 40,
+    // paddingTop: 40,
     alignItems: 'center',
   },
   clds: {

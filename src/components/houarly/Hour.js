@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     marginTop: 10,
     position : 'relative',
-    top : -20
+    top : -40
   },
   title: {
     fontSize: 16,

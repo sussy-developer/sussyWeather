@@ -25,29 +25,31 @@ const styles = StyleSheet.create({
         // borderStyle: 'solid',
         display : 'flex',
         position : 'relative',
-        top : 50,
-        padding : 10,
+        // top : 50,
+        // padding : 10,
         flexDirection : 'row',
-        gap : 10
+        // gap : 10
+        top : -30,
+        left :-110
 
     },
     degree : {
-        borderWidth: 2,           // Thickness
-        borderColor: '#9a9999',      // Color
-        borderRadius:30,          // Rounded corners
-        borderStyle: 'solid',
-        fontSize :30,
+        // borderWidth: 2,           // Thickness
+        // borderColor: '#9a9999',      // Color
+        // borderRadius:30,          // Rounded corners
+        // borderStyle: 'solid',
+        fontSize :20,
         fontWeight : 'bold',
         // paddingHorizontal : 20,
         // paddingVertical : 5
         display : 'flex',
-        justifyContent : 'center',
-        alignItems : 'center',
+        // justifyContent : 'center',
+        // alignItems : 'center',
         paddingHorizontal : 20,
         paddingVertical : 10
 ,    },
 img : {
-    width :50,
-    height :50,
+    width :30,
+    height :30,
 }
 })

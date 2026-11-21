@@ -11,7 +11,6 @@ export default function TempSection({ weatherData, textColor, isDark }) {
 const styles = StyleSheet.create({
     Temp: {
         position: 'relative',
-        
         // borderWidth: 2,           // Thickness
         // borderColor: 'green',      // Color
         // borderRadius: 8,          // Rounded corners

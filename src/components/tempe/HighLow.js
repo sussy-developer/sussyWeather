@@ -25,11 +25,11 @@ export default function HighLow({ weatherData, textColor, isDark }) {
     <View style={styles.container}>
       <View style={styles.badge}>
         <Text style={[styles.itemText, { color: activeColor }]}>
-          H: <Text style={styles.val}>{maxTemp !== '--' ? `${maxTemp}°` : '--'}</Text>
+          High: <Text style={styles.val}>{maxTemp !== '--' ? `${maxTemp}°C` : '--'}</Text>
         </Text>
-        <Text style={[styles.separator, { color: subColor }]}>·</Text>
+        <Text style={[styles.separator, { color: subColor }]}> . </Text>
         <Text style={[styles.itemText, { color: subColor }]}>
-          L: <Text style={styles.val}>{minTemp !== '--' ? `${minTemp}°` : '--'}</Text>
+          Low: <Text style={styles.val}>{minTemp !== '--' ? `${minTemp}°C` : '--'}</Text>
         </Text>
       </View>
     </View>
