@@ -2,8 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
-// Mini vector weather icons matching the app's SVG design
+
 function HourlyWeatherIcon({ code, isDay }) {
+
   const isRain = [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code);
   const isStorm = [95, 96, 99].includes(code);
   const isCloud = [1, 2, 3].includes(code);
@@ -48,7 +49,7 @@ function HourlyWeatherIcon({ code, isDay }) {
     );
   }
 
-  // Clear Sky
+
   if (isDay === 1) {
     return (
       <Svg width={26} height={26} viewBox="0 0 24 24">
@@ -63,7 +64,6 @@ function HourlyWeatherIcon({ code, isDay }) {
     );
   }
 
-  // Clear Night (Moon)
   return (
     <Svg width={26} height={26} viewBox="0 0 24 24">
       <Path
@@ -82,7 +82,6 @@ export default function Hour({ weatherData, textColor, isDark }) {
   const hourly = weatherData?.hourly;
   if (!hourly || !hourly.time) return null;
 
-  // Convert parallel arrays into a usable array of objects
   const hourlyList = hourly.time.map((timeStr, index) => {
     const isNow = index === 0;
     const date = new Date(timeStr);
