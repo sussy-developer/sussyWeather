@@ -57,7 +57,8 @@ export default function App() {
   const [isNight, setIsNight] = useState(true);
   const [location, setLocation] = useState(null); //location
   const [weatherData, setWeatherData] = useState(null);
-  const [placeData, setPlaceData] = useState (null);
+  const [placeData, setPlaceData] = useState(null);
+  const [aqi, setAqi] = useState(null);
 
 
   useEffect(() => {
@@ -92,7 +93,7 @@ export default function App() {
         const res = await fetch(URL);
         // console.log('Status:', res.status, 'OK:', res.ok);
         const data = await res.json();
-        console.log('body : ', data);
+        // console.log('body : ', data);
         // data.current.is_day = 0;
         // data.current.weather_code = 3;
         // console.log(data.hourly.temperature_2m)
@@ -108,19 +109,37 @@ export default function App() {
 
     async function fetchplace() {
       const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`;
-    try{
-      const place = await fetch(url);
-      console.log('Status:', place.status, 'OK:', place.ok);
-      const placename = await place .json()
-      // console.log (placename)
-      // console.log(placename.city);
-      setPlaceData(placename) ;
-    }catch(e){
-      console.log('failed to fetch the place name ... ',e.message);
-    }
+      try {
+        const place = await fetch(url);
+        // console.log('Status:', place.status, 'OK:', place.ok);
+        const placename = await place.json()
+        // console.log (placename)
+        // console.log(placename.city);
+        setPlaceData(placename);
+      } catch (e) {
+        console.log('failed to fetch the place name ... ', e.message);
+      }
     }
 
     fetchplace();
+
+
+
+
+    async function fetchAqi() {
+      const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.latitude}&longitude=${location.longitude}&current=us_aqi`;
+      try {
+        const res = await fetch(url);
+        console.log('status: ',res.status, 'ok : ', res.ok);
+        const data = await res.json();
+        console.log(data);
+        setAqi(data);
+      } catch (err) {
+        console.log('Failed to fetch AQI:', err.message);
+      }
+    }
+
+    fetchAqi()
   }, [location]);
 
 
@@ -190,11 +209,11 @@ export default function App() {
         )}
       </View>
 
-      <Info weatherData={weatherData} textColor={textColor} isDark={isDark} />
+      <Info weatherData={weatherData} aqi = {aqi} textColor={textColor} isDark={isDark} />
 
       <Hour weatherData={weatherData} textColor={textColor} isDark={isDark} />
 
-      <Place weatherData = {weatherData} placeData = {placeData} textColor = {textColor} isDark = {isDark} />
+      <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} />
       <StatusBar style={isDark ? "light" : "dark"} />
     </View>
   );
