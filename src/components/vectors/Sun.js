@@ -13,17 +13,15 @@ export default function Sun({
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Continuous 360-degree rotation of the sun and its rays
     const spin = Animated.loop(
       Animated.timing(spinAnim, {
         toValue: 1,
-        duration: 16000, // 16 seconds per full smooth rotation
+        duration: 16000,
         easing: Easing.linear,
         useNativeDriver: true,
       })
     );
 
-    // Radiant breathing pulse animation
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -75,7 +73,6 @@ export default function Sun({
             </LinearGradient>
           </Defs>
 
-          {/* 12 Radiating Sun Rays in 360 Degrees */}
           <Line x1="50" y1="14" x2="50" y2="4" stroke={rayColor || '#fbbf24'} strokeWidth="4" strokeLinecap="round" />
           <Line x1="68" y1="18.82" x2="73" y2="10.16" stroke={rayColor || '#fbbf24'} strokeWidth="4" strokeLinecap="round" />
           <Line x1="81.18" y1="32" x2="89.84" y2="27" stroke={rayColor || '#fbbf24'} strokeWidth="4" strokeLinecap="round" />
@@ -89,7 +86,6 @@ export default function Sun({
           <Line x1="18.82" y1="32" x2="10.16" y2="27" stroke={rayColor || '#fbbf24'} strokeWidth="4" strokeLinecap="round" />
           <Line x1="32" y1="18.82" x2="27" y2="10.16" stroke={rayColor || '#fbbf24'} strokeWidth="4" strokeLinecap="round" />
 
-          {/* Central Sun Orb */}
           <Circle cx="50" cy="50" r="26" fill="url(#standaloneSunGrad)" />
         </Svg>
       </Animated.View>

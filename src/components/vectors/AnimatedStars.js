@@ -3,7 +3,6 @@ import { StyleSheet, View, Animated, Easing } from 'react-native';
 import Svg, { Path, Circle } from 'react-native-svg';
 
 const STARS = [
-  // Delicate, fine pinpoint stars across the night sky (10 stars)
   { x: 12, y: 7, size: 8, type: 'sparkle', color: '#ffffff', group: 0 },
   { x: 84, y: 9, size: 7, type: 'sparkle', color: '#fef08a', group: 1 },
   { x: 90, y: 22, size: 5, type: 'dot', color: '#e0f2fe', group: 2 },

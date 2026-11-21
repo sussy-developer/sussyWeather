@@ -14,7 +14,6 @@ export default function SunCloud({
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
-    // Continuous 360-degree rotation of the sun and its rays
     const spin = Animated.loop(
       Animated.timing(spinAnim, {
         toValue: 1,
@@ -24,7 +23,6 @@ export default function SunCloud({
       })
     );
 
-    // Subtle breathing pulse for radiant sunlight
     const pulse = Animated.loop(
       Animated.sequence([
         Animated.timing(pulseAnim, {
@@ -56,14 +54,12 @@ export default function SunCloud({
     outputRange: ['0deg', '360deg'],
   });
 
-  // Calculate sun position to center directly at (68, 34) in 110x85 space
   const sunSize = width * (64 / 110);
   const sunLeft = width * (68 / 110) - sunSize / 2;
   const sunTop = height * (34 / 85) - sunSize / 2;
 
   return (
     <View style={[{ width, height }, styles.container, style]} {...props}>
-      {/* Animated Rotating & Pulsing Sun (Layered Behind Cloud) */}
       <Animated.View
         style={[
           styles.sunWrapper,
@@ -84,7 +80,6 @@ export default function SunCloud({
             </LinearGradient>
           </Defs>
 
-          {/* All 8 Radiating Sun Rays (Rotating in 360°) */}
           <Line x1="32" y1="8" x2="32" y2="2" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" />
           <Line x1="49" y1="15" x2="53" y2="11" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" />
           <Line x1="56" y1="32" x2="62" y2="32" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" />
@@ -94,12 +89,10 @@ export default function SunCloud({
           <Line x1="8" y1="32" x2="2" y2="32" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" />
           <Line x1="15" y1="15" x2="11" y2="11" stroke="#fbbf24" strokeWidth="3.5" strokeLinecap="round" />
 
-          {/* Sun Orb */}
           <Circle cx="32" cy="32" r="19" fill="url(#sunGrad)" />
         </Svg>
       </Animated.View>
 
-      {/* Cloud (Layered in Foreground, partially covering the Sun) */}
       <View style={styles.cloudWrapper}>
         <Svg width={width} height={height} viewBox="0 0 110 85">
           <Defs>

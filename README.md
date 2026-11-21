@@ -1,10 +1,10 @@
-#  Weather App
+# 🌦️ Weather App
 
 A modern, minimal, and reactive weather mobile application built with **React Native** and **Expo (SDK 52)**. Features dynamic day/night atmospheric theming, pure SVG vector animations, a smooth cubic Bezier temperature wave graph, real-time air quality index (AQI), hourly forecast, and full edge-to-edge Android system bar synchronization.
 
 ---
 
-##  Visual Showcase
+## 📱 Visual Showcase
 
 <div align="center">
   <table>
@@ -23,7 +23,7 @@ A modern, minimal, and reactive weather mobile application built with **React Na
 
 ---
 
-##  App Demo Video
+## 🎥 App Demo Video
 
 <!-- 
   You can embed an MP4 video or an animated GIF preview below.
@@ -45,31 +45,31 @@ A modern, minimal, and reactive weather mobile application built with **React Na
 
 ---
 
-##  Key Features
+## ✨ Key Features
 
-- ** Adaptive Weather Theming:** Dynamic palette transitions responding to weather codes and day/night cycles (`#111827` clear night, `#262d3d` cloudy night, `#1e293b` rainy night, `#fff0c5` clear day, etc.) with automatic high-contrast typography.
-- ** Pure SVG Animated Weather Vectors:**
+- **🎨 Adaptive Weather Theming:** Dynamic palette transitions responding to weather codes and day/night cycles (`#111827` clear night, `#262d3d` cloudy night, `#1e293b` rainy night, `#fff0c5` clear day, etc.) with automatic high-contrast typography.
+- **✨ Pure SVG Animated Weather Vectors:**
   - **Sun:** Smooth 360° rotation and radiant breathing pulse animation.
   - **Moon:** Crisp, luminous crescent moon with radial gradient glow.
   - **Animated Stars:** 10 delicately placed pinpoint stars with staggered twinkle animations across clear and cloudy night skies.
   - **Rain Cloud:** Dual-layer cloud with cascading animated raindrops.
   - **Sun/Moon Clouds:** Composite depth vectors with layered weather geometry.
-- ** Minimalist Temperature Wave Graph:**
+- **📈 Minimalist Temperature Wave Graph:**
   - Built with Catmull-Rom cubic Bezier curve smoothing for an organic temperature trajectory.
   - Static current-time marker (`⊙ Now`) with vertical indicator stem.
   - Interactive timeline timestamps along the bottom axis.
-- ** 12-Hour Forecast Carousel:** Horizontal scrollable forecast cards highlighting the projected temperature, time, and contextual vector icons for each upcoming hour.
-- ** Daily High / Low Temperatures:** Instant daily range snapshot (`H: 26° / L: 14°`) directly beneath the current temperature.
-- ** Real-Time Weather Metrics & Air Quality:**
+- **⏰ 12-Hour Forecast Carousel:** Horizontal scrollable forecast cards highlighting the projected temperature, time, and contextual vector icons for each upcoming hour.
+- **🌡️ Daily High / Low Temperatures:** Instant daily range snapshot (`H: 26° / L: 14°`) directly beneath the current temperature.
+- **💨 Real-Time Weather Metrics & Air Quality:**
   - Wind Speed (km/h)
   - Relative Humidity (%)
   - US Air Quality Index (US AQI) fetched in real-time
-- ** Precise Geolocation & Reverse Geocoding:** Automatically captures GPS coordinates and converts them into human-readable city/locality names via BigDataCloud.
-- ** Edge-to-Edge System Bar Integration:** Fully synchronized Android Navigation Bar and Status Bar that match the dynamic app background color with no visual seams.
+- **📍 Precise Geolocation & Reverse Geocoding:** Automatically captures GPS coordinates and converts them into human-readable city/locality names via BigDataCloud.
+- **📱 Edge-to-Edge System Bar Integration:** Fully synchronized Android Navigation Bar and Status Bar that match the dynamic app background color with no visual seams.
 
 ---
 
-##  Tech Stack & Libraries
+## 🛠️ Tech Stack & Libraries
 
 | Technology | Purpose |
 |---|---|
@@ -84,7 +84,7 @@ A modern, minimal, and reactive weather mobile application built with **React Na
 
 ---
 
-##  Project Structure
+## 📂 Project Structure
 
 ```text
 Weather/
@@ -124,13 +124,14 @@ Weather/
 │           └── SunCloud.js
 ├── App.js                        # Core application state, API calls & theming
 ├── app.json                      # Expo application manifest & configuration
+├── eas.json                      # EAS Build profiles (APK & production)
 ├── package.json                  # Dependencies & scripts
 └── README.md
 ```
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
@@ -165,7 +166,30 @@ npx expo start
 
 ---
 
-## APIs Used
+## 📦 Building Standalone APK (for GitHub Releases)
+
+To generate a standalone installable `.apk` file using Expo Application Services (EAS):
+
+1. **Install EAS CLI & Log In**:
+   ```bash
+   npm install -g eas-cli
+   eas login
+   ```
+
+2. **Run Cloud APK Build**:
+   ```bash
+   eas build --platform android --profile preview
+   ```
+   *EAS will compile the Android APK in the cloud and provide a direct download link.*
+
+3. **Publish to GitHub Releases**:
+   - Download the `.apk` file from the EAS build URL.
+   - Go to your GitHub repository -> **Releases** -> **Draft a new release**.
+   - Attach the `.apk` file and publish!
+
+---
+
+## 🌐 APIs Used
 
 1. **Weather Forecast API:**
    ```http
@@ -182,6 +206,6 @@ npx expo start
 
 ---
 
-## License
+## 📄 License
 
 This project is open-source and available under the terms of the [MIT License](LICENSE).
