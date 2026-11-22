@@ -4,17 +4,28 @@ import Svg, { Path, Circle } from 'react-native-svg';
 
 
 function HourlyWeatherIcon({ code, isDay }) {
-
-  const isRain = [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code);
-  const isStorm = [95, 96, 99].includes(code);
-  const isCloud = [1, 2, 3].includes(code);
-  const isFog = [45, 48].includes(code);
+  const isStorm = [95, 96, 97, 99].includes(code);
+  const isHeavyRain = [80, 81, 82, 85, 86].includes(code);
+  const isRain = [61, 63, 65, 66, 67].includes(code);
+  const isCloudOnly = [55, 56, 57].includes(code);
+  const isFog = [3, 45].includes(code);
+  const isSnow = [48, 71, 73, 75, 77].includes(code);
+  const isPartlyCloud = [2, 51, 53].includes(code);
 
   if (isStorm) {
     return (
       <Svg width={26} height={26} viewBox="0 0 24 24">
-        <Path d="M7 15a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.4 0A4 4 0 0 1 17 15H7z" fill="#94a3b8" />
+        <Path d="M7 15a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.4 0A4 4 0 0 1 17 15H7z" fill="#475569" />
         <Path d="M12 13l-2 4h3l-1 4 4-5h-3l2-3z" fill="#facc15" />
+      </Svg>
+    );
+  }
+
+  if (isHeavyRain) {
+    return (
+      <Svg width={26} height={26} viewBox="0 0 24 24">
+        <Path d="M7 13a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.4 0A4 4 0 0 1 17 13H7z" fill="#64748b" />
+        <Path d="M6 16l-2 4M10 16l-2 4M14 16l-2 4M18 16l-2 4" stroke="#0288d1" strokeWidth="2.2" strokeLinecap="round" />
       </Svg>
     );
   }
@@ -28,7 +39,33 @@ function HourlyWeatherIcon({ code, isDay }) {
     );
   }
 
-  if (isCloud) {
+  if (isSnow) {
+    return (
+      <Svg width={26} height={26} viewBox="0 0 24 24">
+        <Path d="M12 3v18M3 12h18M5.64 5.64l12.72 12.72M5.64 18.36L18.36 5.64" stroke="#60a5fa" strokeWidth="1.8" strokeLinecap="round" />
+        <Circle cx="12" cy="12" r="2.5" fill="#38bdf8" />
+      </Svg>
+    );
+  }
+
+  if (isFog) {
+    return (
+      <Svg width={26} height={26} viewBox="0 0 24 24">
+        <Path d="M7 12a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.4 0A4 4 0 0 1 17 12H7z" fill="#cbd5e1" />
+        <Path d="M4 16h16M6 19h12" stroke="#94a3b8" strokeWidth="1.8" strokeDasharray="2 3" strokeLinecap="round" />
+      </Svg>
+    );
+  }
+
+  if (isCloudOnly) {
+    return (
+      <Svg width={26} height={26} viewBox="0 0 24 24">
+        <Path d="M7 14a4 4 0 0 1-.7-7.9 6 6 0 0 1 11.4 0A4 4 0 0 1 17 14H7z" fill="#cbd5e1" />
+      </Svg>
+    );
+  }
+
+  if (isPartlyCloud) {
     return (
       <Svg width={26} height={26} viewBox="0 0 24 24">
         {isDay === 1 ? (
@@ -37,14 +74,6 @@ function HourlyWeatherIcon({ code, isDay }) {
           <Path d="M8 4a5 5 0 0 1 3 6 4 4 0 0 1-4-3 5 5 0 0 1 1-3z" fill="#fef08a" />
         )}
         <Path d="M8 16a4 4 0 0 1-.7-7.9 5.5 5.5 0 0 1 10.4 0A3.5 3.5 0 0 1 17 16H8z" fill="#cbd5e1" />
-      </Svg>
-    );
-  }
-
-  if (isFog) {
-    return (
-      <Svg width={26} height={26} viewBox="0 0 24 24">
-        <Path d="M5 9h14M3 13h18M6 17h12" stroke="#94a3b8" strokeWidth="2" strokeLinecap="round" />
       </Svg>
     );
   }

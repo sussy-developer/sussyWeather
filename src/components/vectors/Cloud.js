@@ -19,7 +19,7 @@ export default function Cloud({
       <Defs>
         <LinearGradient id="cloudGrad" x1="0%" y1="0%" x2="0%" y2="100%">
           <Stop offset="0%" stopColor={color || '#adadad85'} stopOpacity="1" />
-          <Stop offset="100%" stopColor={color ? color : '#dbeafe4f'} stopOpacity="1" />
+          <Stop offset="100%" stopColor={color ? color : '#9dabc14f'} stopOpacity="1" />
         </LinearGradient>
       </Defs>
       <Path
