@@ -33,6 +33,7 @@ export function useWeather() {
     try {
       const res = await fetch(url);
       const data = await res.json();
+      data.current.weather_code = 97
       console.log(data);
       setWeatherData(data);
     } catch (err) {
