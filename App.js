@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { useEffect, useState } from 'react';
-import { Alert, StyleSheet, Text, View, Image, Platform } from 'react-native';
+import { Alert, StyleSheet, Text, View, Image, Platform, RefreshControl, ScrollView } from 'react-native';
 import * as Location from 'expo-location';
 import { fetchWeatherApi } from "openmeteo";
 import * as NavigationBar from 'expo-navigation-bar';
@@ -61,6 +61,7 @@ export default function App() {
   const [weatherData, setWeatherData] = useState(null);
   const [placeData, setPlaceData] = useState(null);
   const [aqi, setAqi] = useState(null);
+  const [refreshing, setrefreashing] = useState(false)
 
   useEffect(() => {
     async function requestlocation() {
@@ -141,6 +142,70 @@ export default function App() {
     fetchAqi()
   }, [location]);
 
+  
+  
+  async function onRefresh() {
+    setrefreashing(true);
+    try {
+       async function fetchWeather() {
+      const URL = `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&current=temperature_2m,relative_humidity_2m,is_day,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,is_day&daily=temperature_2m_max,temperature_2m_min&forecast_hours=12&timezone=auto`;
+
+      try {
+        const res = await fetch(URL);
+        // console.log('Status:', res.status, 'OK:', res.ok);
+        const data = await res.json();
+        // console.log('body : ', data);
+        // data.current.is_day = 1;
+        // data.current.weather_code = 81;
+        // console.log(data.hourly.temperature_2m)
+        // console.log(data.hourly.time)
+
+        setWeatherData(data);
+      } catch (err) {
+        console.error('failed to fetch ', err.message);
+      }
+    }
+    fetchWeather();
+  
+      async function fetchAqi() {
+      const url = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${location.latitude}&longitude=${location.longitude}&current=us_aqi`;
+      try {
+        const res = await fetch(url);
+        console.log('status: ', res.status, 'ok : ', res.ok);
+        const data = await res.json();
+        console.log(data);
+        setAqi(data);
+      } catch (err) {
+        console.log('Failed to fetch AQI:', err.message);
+      }
+    }
+
+    fetchAqi()
+
+
+
+    async function fetchplace() {
+      const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${location.latitude}&longitude=${location.longitude}&localityLanguage=en`;
+      try {
+        const place = await fetch(url);
+        // console.log('Status:', place.status, 'OK:', place.ok);
+        const placename = await place.json()
+        // console.log (placename)
+        // console.log(placename.city);
+        setPlaceData(placename);
+      } catch (e) {
+        console.log('failed to fetch the place name ... ', e.message);
+      }
+    }
+
+    fetchplace();
+
+
+    
+    } finally {
+      setrefreashing(false);
+    }
+  }
 
   const weatherCode = weatherData?.current?.weather_code;
   const isDay = weatherData?.current?.is_day;
@@ -168,56 +233,65 @@ export default function App() {
 
 
   return (
-    <View style={[styles.container, { backgroundColor: bgColor }]}>
-      {showStars && <AnimatedStars />}
-      
-      <TempSection weatherData={weatherData} textColor={textColor} isDark={isDark} />
-      <HighLow weatherData={weatherData} textColor={textColor} isDark={isDark} />
-      <View style={styles.ani}>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing = {refreshing}
+          onRefresh={onRefresh}
+        />
+      }
+    >
+      <View style={[styles.container, { backgroundColor: bgColor }]}>
+        {showStars && <AnimatedStars />}
 
-  
-        {needsun && (
-          <View>
-            {
-              isDay == 1 ? (
-                <Sun width={280} height={180} />
+        <TempSection weatherData={weatherData} textColor={textColor} isDark={isDark} />
+        <HighLow weatherData={weatherData} textColor={textColor} isDark={isDark} />
+        <View style={styles.ani}>
+
+
+          {needsun && (
+            <View>
+              {
+                isDay == 1 ? (
+                  <Sun width={280} height={180} />
+                ) : (
+                  <Moon width={280} height={180} />
+                )
+              }
+            </View>
+
+          )}
+
+
+
+          {needCloud && (
+            <View style={styles.clds}>
+              {isDay === 1 ? (
+                <SunCloud width={280} height={180} />
               ) : (
-                <Moon width={280} height={180} />
-              )
-            }
-          </View>
+                <MoonCloud width={280} height={180} />
+              )}
 
-        )}
-
-
-        
-        {needCloud && (
-          <View style={styles.clds}>
-            {isDay === 1 ? (
-              <SunCloud width={280} height={180} />
-            ) : (
-              <MoonCloud width={280} height={180} />
-            )}
-
-          </View>
-        )}
+            </View>
+          )}
 
 
-        {needrain && (
-          <RainCloud />
-        )}
+          {needrain && (
+            <RainCloud />
+          )}
+        </View>
+
+        <Info weatherData={weatherData} aqi={aqi} textColor={textColor} isDark={isDark} />
+        <GraphDiagram weatherData={weatherData} textColor={textColor} isDark={isDark} />
+
+        <Hour weatherData={weatherData} textColor={textColor} isDark={isDark} />
+
+
+
+        <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} />
+        <StatusBar style={isDark ? "light" : "dark"} backgroundColor={bgColor} translucent={true} />
       </View>
-
-      <Info weatherData={weatherData} aqi={aqi} textColor={textColor} isDark={isDark} />
-      <GraphDiagram weatherData={weatherData} textColor={textColor} isDark={isDark} />
-
-      <Hour weatherData={weatherData} textColor={textColor} isDark={isDark} />
-
-      
-
-      <Place weatherData={weatherData} placeData={placeData} textColor={textColor} isDark={isDark} />
-      <StatusBar style={isDark ? "light" : "dark"} backgroundColor={bgColor} translucent={true} />
-    </View>
+    </ScrollView>
   );
 }
 
