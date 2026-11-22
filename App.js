@@ -12,6 +12,7 @@ import Moon from './src/components/vectors/Moon';
 import Cloud from './src/components/vectors/Cloud';
 import FogCloud from './src/components/vectors/FogCloud';
 import Snowflake from './src/components/vectors/Snowflake';
+import SnowCloud from './src/components/vectors/SnowCloud';
 import ThunderstormCloud from './src/components/vectors/ThunderstormCloud';
 import AnimatedStars from './src/components/vectors/AnimatedStars';
 import Info from './src/components/info/Info';
@@ -26,6 +27,7 @@ import { useWeatherTheme } from './src/hooks/useWeatherTheme';
 export default function App() {
   const { weatherData, placeData, aqi, refreshing, onRefresh } = useWeather();
   const {
+    weatherCode,
     isDay,
     bgColor,
     isDark,
@@ -33,6 +35,7 @@ export default function App() {
     needsun,
     needSunCloud,
     needFog,
+    needSnowflake,
     needSnow,
     needCloudOnly,
     needRain,
@@ -89,8 +92,12 @@ export default function App() {
             <FogCloud width={280} height={180} />
           )}
 
-          {needSnow && (
+          {needSnowflake && (
             <Snowflake size={180} />
+          )}
+
+          {needSnow && (
+            <SnowCloud weatherCode={weatherCode} />
           )}
 
           {needCloudOnly && (

@@ -5,11 +5,11 @@ import Svg, { Path, Circle } from 'react-native-svg';
 
 function HourlyWeatherIcon({ code, isDay }) {
   const isStorm = [95, 96, 97, 99].includes(code);
-  const isHeavyRain = [80, 81, 82, 85, 86].includes(code);
+  const isHeavyRain = [80, 81, 82].includes(code);
   const isRain = [61, 63, 65, 66, 67].includes(code);
   const isCloudOnly = [55, 56, 57].includes(code);
   const isFog = [3, 45].includes(code);
-  const isSnow = [48, 71, 73, 75, 77].includes(code);
+  const isSnow = [48, 71, 73, 75, 77, 85, 86].includes(code);
   const isPartlyCloud = [2, 51, 53].includes(code);
 
   if (isStorm) {
